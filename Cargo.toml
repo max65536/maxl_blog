@@ -1,0 +1,18 @@
+[package]
+name = "maxl_blog"
+version = "0.1.0"
+authors = ["maxl"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = "=0.5.0-rc.3"
+# rocket_contrib = {version = "0.4.10", default-features = false, features = ["tera_templates","handlebars_templates"]}
+tera = "1"
+diesel = { version = "2.1.0", features = ["mysql"] }
+rand = "0.8"
+
+[dependencies.rocket_dyn_templates]
+version = "=0.1.0-rc.3"
+features = ["handlebars", "tera"]
