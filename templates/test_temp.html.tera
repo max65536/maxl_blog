@@ -1,0 +1,4 @@
+<h1>Welcome, {{ user.name }}!</h1>
+<p>Age: {{ user.age }}</p>
+
+

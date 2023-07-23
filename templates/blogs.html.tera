@@ -1,0 +1,14 @@
+
+    <div >
+        {% for blog in blogs %}
+            <article class="uk-article">
+                <h2><a href="/blog/{{blog.id}}">{{blog.name}}</a></h2>
+                <p class="uk-article-meta">published at {{blog.created_at}}</p>
+                <p>{{blog.summary}}</p>
+                <p><a href="/blog/{{blog.id}}">read more<i class="uk-icon-angle-double-right"></i></a></p>
+            </article>
+            
+        {% endfor %}
+    </div>
+
+

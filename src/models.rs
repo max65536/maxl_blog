@@ -1,47 +1,23 @@
-use crate::schema::{users, posts};
-use diesel::prelude::{Queryable,Insertable};
-use rocket::serde::Serialize;
+use rocket::serde::{Serialize, Deserialize};
 
-#[derive(Debug, Queryable)]
-pub struct User {
-    pub id: i32,
-    pub first_name: String,
-    pub last_name: String,
-    pub email: String,
-    pub password: String, 
-}
-
-#[derive(Debug, Insertable)]
-#[table_name="users"]
-pub struct NewUser {
-    pub first_name: String,
-    pub last_name: String,
-    pub email: String,
-    pub password: String, 
-}
-
-#[derive(Debug, Queryable)]
-pub struct Post {
-    pub id: i32,
-    pub user_id: i32,
-    pub title: String,
-    pub content: String,
-    pub published: bool,
-}
-
-#[derive(Debug, Insertable)]
-#[table_name="posts"]
-pub struct NewPost {
-    pub user_id: i32,
-    pub title: String,
-    pub content: String,
-}
-
-#[derive(Serialize, Queryable)]
-#[serde(crate = "rocket::serde")]
+#[derive(Serialize, Deserialize)]
 pub struct Bird {
     pub id: i32,
     pub name: String,
     pub scientific_name: String,
     pub commonwealth_status: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Blog {
+    pub id : String,
+    pub user_id: String,
+    pub user_name : String,
+    pub user_image: String,
+    pub name : String,
+    pub summary: String,
+    pub content : String,
+    pub created_at: f64,
+    pub image: String,
+    pub show: i8
 }
