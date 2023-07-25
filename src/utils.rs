@@ -1,4 +1,5 @@
 use serde_derive::Serialize;
+use std::fs;
 
 #[derive(Debug, Serialize)]
 pub struct Page {
@@ -30,9 +31,9 @@ impl Page {
             item_count,
             page_size,
             page_count,
-            offset      :1,
-            limit       :10,
-            page_index  :1,
+            offset,
+            limit,
+            page_index,
             has_next,
             has_pre,
         }
@@ -43,21 +44,48 @@ impl Page {
     }
 }
 
-// fn main() {
-//     let p1 = Page::new(100, 1, 10);
-//     println!("{:?}", p1);
-
-//     let p2 = Page::new(90, 9, 10);
-//     println!("{:?}", p2);
-// }
-
 pub fn get_page_index(page_str: String) -> i32{
-    let mut p = 1;
-    if let Ok(parsed_page) = page_str.parse::<i32>() {
-        p = parsed_page;
-    }
+    
+    let mut p = if let Ok(parsed_page) = page_str.parse::<i32>() {parsed_page} else { 1 };
+
     if p < 1 {
         p=1
     }
     p
+}
+
+pub fn list_files_in_directory(path: &str) -> Vec<String> {
+    let entries = fs::read_dir(path)
+        .unwrap()
+        .map(|res| res.map(|e| e.path()))
+        .collect::<Result<Vec<_>, _>>()
+        .unwrap();
+
+    let mut file_names = Vec::new();
+    for entry in entries {
+        if let Some(name) = entry.file_name().and_then(|n| n.to_str()) {
+            file_names.push(name.to_string());
+        }
+    }
+
+    file_names
+}
+
+pub fn list_files(path:&str) -> Vec<String> {
+    let path_replace = path.replace("-", "/");
+
+    let entries = fs::read_dir(path_replace)
+        .unwrap()
+        .map(|res| res.map(|e| e.path()))
+        .collect::<Result<Vec<_>, _>>()
+        .unwrap();
+
+    let mut file_names = Vec::new();
+
+    for entry in entries {
+        if let Some(name) = entry.file_name().and_then(|n| n.to_str()) {
+            file_names.push(name.to_string());
+        }
+    }
+    file_names
 }

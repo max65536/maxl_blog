@@ -1,0 +1,5 @@
+{% extends "parent" %}
+
+{% block content %}
+    <h1>This is child content.</h1>
+{% endblock %}

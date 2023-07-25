@@ -1,5 +1,5 @@
 use rocket_db_pools::Database;
 
 #[derive(Database)]
-#[database("maxl_blog")]
+#[database("awesome")]
 pub struct BlogsDB(sqlx::MySqlPool);

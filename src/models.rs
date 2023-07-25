@@ -21,3 +21,14 @@ pub struct Blog {
     pub image: String,
     pub show: i8
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct Comment {
+    pub id : String,
+    pub blog_id : String,
+    pub user_id : String,
+    pub user_name : String,
+    pub user_image : String,
+    pub content : String,
+    pub created_at: f64
+}
