@@ -16,10 +16,8 @@ mod models;
 mod utils;
 // mod handlers_bird;
 
-
-
 pub fn datetime_filter(value: &Value, args: &HashMap<String, Value>) -> Result<Value> {
-        // 尝试从值中提取timestamp
+    // 尝试从值中提取timestamp
     let timestamp = value.as_f64().unwrap();
 
     // 分离秒和纳秒
@@ -36,7 +34,6 @@ pub fn datetime_filter(value: &Value, args: &HashMap<String, Value>) -> Result<V
         .unwrap_or("%Y-%m-%d %H:%M");
 
     Ok(Value::String(datetime.format(format).to_string()))
-
 }
 
 #[launch]
@@ -49,6 +46,7 @@ fn rocket() -> Rocket<Build> {
         }))
         .attach(handlers_blog::stage())
         .attach(handlers_test::stage())
+        .attach(handlers_comment::stage())
         .mount("/static", FileServer::from(relative!("static")))
         .mount("/image", FileServer::from(relative!("blog_data")))
 }

@@ -18,8 +18,6 @@
 </script>
 <script>
 var comment_url = '/api/blogs/{{ blog.id }}/comments';
-
-
 function initVM(image) {
     var vm = new Vue({
         el: '#vm',
@@ -32,9 +30,9 @@ function initVM(image) {
             submit: function (event) {
                 event.preventDefault();
                 var $form = $('#vm').find('form');
-                // alert('submit!');
                 $form.postJSON(comment_url, this.$data, function (err, r) {
-                    if (err) {
+                    console.log(err);
+                    if (err) {                        
                         $form.showFormError(err);
                     }
                     else {
@@ -48,22 +46,6 @@ function initVM(image) {
 }
 
 $(function () {
-    // var $form = $('#form-comment');
-    // $form.submit(function (e) {
-    //     e.preventDefault();
-    //     $form.showFormError('');
-    //     var content = $form.find('textarea').val().trim();
-    //     var name= document.getElementsByName('name');
-    //     if (content==='') {
-    //         return $form.showFormError('请输入评论内容！');
-    //     }
-    //     $form.postJSON(comment_url, { content: content,name:name }, function (err, result) {
-    //         if (err) {
-    //             return $form.showFormError(err);
-    //         }
-    //         location.reload();
-    //     });
-    // });
     var image='{{ image }}';
     initVM(image);
 });

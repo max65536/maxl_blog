@@ -1,5 +1,7 @@
 use serde_derive::Serialize;
 use std::fs;
+use std::time::{SystemTime, UNIX_EPOCH};
+use uuid::Uuid;
 
 #[derive(Debug, Serialize)]
 pub struct Page {
@@ -88,4 +90,23 @@ pub fn list_files(path:&str) -> Vec<String> {
         }
     }
     file_names
+}
+
+pub fn next_id() -> String {
+    let start = SystemTime::now();
+    let since_the_epoch = start.duration_since(UNIX_EPOCH).unwrap_or_default();
+    let millis = since_the_epoch.as_millis(); // 返回自 epoch 以来的毫秒数
+
+    format!("{:015}{}", millis, Uuid::new_v4().as_simple())
+}
+
+pub fn get_timestamp() -> f64 {
+    let start = SystemTime::now();
+    let since_the_epoch = start.duration_since(UNIX_EPOCH).expect("Time went backwards");
+
+    let seconds = since_the_epoch.as_secs() as f64;
+    let nanoseconds = since_the_epoch.subsec_nanos() as f64;
+
+    let timestamp = seconds + nanoseconds / 1_000_000_000.0;
+    timestamp
 }

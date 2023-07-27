@@ -8,9 +8,9 @@ use rocket::serde::json::Json;
 use rocket_dyn_templates::{Template, context};
 use serde_derive::Serialize;
 use rand::seq::SliceRandom;
-use comrak::{markdown_to_html, ComrakOptions};
+use comrak::markdown_to_html;
 
-use crate::utils::{Page, get_page_index, list_files_in_directory, list_files};
+use crate::utils::{Page, get_page_index, list_files_in_directory};
 use crate::models::{Blog, Comment};
 use crate::database::BlogsDB;
 
@@ -49,7 +49,7 @@ async fn get_blog_details(db: Connection<BlogsDB>, id:String) -> Template {
     match blog {
         Some(b) => {
 
-            let mut options = comrak::ComrakOptions::default();
+            let options = comrak::ComrakOptions::default();
             // options = true;  // 启用HTML自动转义
             let html_str = markdown_to_html(&b.content, &options);
             let blog_with_markdown = Blog{content:html_str, ..b};
@@ -179,7 +179,7 @@ fn items() -> Template {
 }
 
 #[get("/blog_temp")]
-async fn blog_temp(mut db: Connection<BlogsDB>) -> Template{
+async fn blog_temp(db: Connection<BlogsDB>) -> Template{
     let page = Some(String::from("1"));
     let (blogs, p) = api_list_blogs(db, page.clone())
         .await;
